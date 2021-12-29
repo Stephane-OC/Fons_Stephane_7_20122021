@@ -5,11 +5,13 @@ const auth = require("../middleware/auth");
 const multer = require("../middleware/multer-config");
 
 router.get("/", auth, postCtrl.getAll);
+
 router.post("/byAuthor",postCtrl.getByAuthor);
+router.post("/", auth, multer, postCtrl.create);
 
-////////////////////////////  A VENIR  ////////////////////////////
+router.put("/:id", multer, postCtrl.modify);
 
-//Router post "create"
-//Router delete "delete"
-//router put "modify"
+router.delete("/:id", auth, postCtrl.delete);
+
+
 module.exports = router;

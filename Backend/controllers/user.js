@@ -11,7 +11,7 @@ const fs = require("fs");
 **  getOne & getAs to get back all the user's informations correctly        **
 **  modifAccount, to make user able to modify his account informations      **
 **  modifyPassword to make user able to modify his password on a secure way **
-**  delete function to make use able to delete his account                  */
+**  delete function to make user able to delete his account                  */
 
 ////////////////////////////  Signup Function  ////////////////////////////
 
@@ -104,7 +104,7 @@ exports.getAs = (req, res, next) => {
 
 ////////////////////////////  User account information modification  ////////////////////////////
 
-exports.modifAccount = (req, res, next) => {
+exports.modifyAccount = (req, res, next) => {
     if (req.body.nom != "") {
         let sql2 = `UPDATE user
                 SET nom= ?
@@ -224,4 +224,3 @@ exports.delete = (req, res, next) => {
         })
     }
 };
-

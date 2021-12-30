@@ -8,7 +8,7 @@ const fs = require("fs");
 **  "getAll" to get back all the user's Post correctly                  **
 **  "create" to make users able to create a post with photo and text    **
 **  "modify" to make user able to modify his own Post                   **
-**  "delete" function to make user able to delete his own Post          */
+**  "delete" function to make user able to delete his own Post          */ 
 
 
 ////////////////////////////  Get all Post Function  ////////////////////////////
@@ -68,7 +68,7 @@ exports.modify = (req, res, next) => {
     if (req.file) {
         let sql = `SELECT * FROM post WHERE id = ?`;
         pool.execute(sql, [req.params.id], function (err, result) {
-            if (err) res.status(400).json({ e });
+            if (err) res.status(400).json({ err });
             if (!result[0]) res.status(400).json({ message: "L'ID ne correspond pas !" });
             else {
                 // If the post has a picture, delete her from the "post" folder

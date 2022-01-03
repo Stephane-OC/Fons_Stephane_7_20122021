@@ -14,12 +14,13 @@ exports.create = (req, res, next) => {
         comment: req.body.comment,
         authorId: req.body.authorId,
         postId: req.body.postId,
+        //AJOUTER UNE DATE AUX COMMENTAIRES
     };
     let sql = `UPDATE post SET post.comment = post.comment + 1 WHERE postId=?;`;
     pool.execute(sql, [req.body.postId], function (err, result) {
         if (err) res.status(400).json({ err });
-        let sql = `INSERT INTO comment (comment, authorId, postId) VALUES (?,?,?);`;
-        pool.execute(sql, [post.comment, post.authorId, post.postId], function (err, result) {
+        let sql = `INSERT INTO comment (comments, authorId, postId) VALUES (?,?,?);`;
+        pool.execute(sql, [req.body.comment, req.body.authorId, req.body.postId], function (err, result) {
             if (err) throw err;
             console.log(result)
             res.status(201).json({ message: `Commentaire ajouté` });
@@ -30,8 +31,15 @@ exports.create = (req, res, next) => {
 ////////////////////////////  Get all comment Function  ////////////////////////////
 
 exports.getAll = (req, res, next) => {
-    let sql = `SELECT * from comment JOIN user WHERE comment.authorId = user.id ORDER BY idComment;`;
-    pool.execute(sql, function (err, result) {
+    let sql = `SELECT 
+    idComment, comments, nom, prenom
+FROM
+    comment
+        JOIN
+    user ON comment.authorId = user.id
+    WHERE comment.postId = ?
+ORDER BY idComment;`;
+    pool.execute(sql, [postId], function (err, result) {
         if (err) res.status(400).json({ err });
         res.status(200).json(result)
     });

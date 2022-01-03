@@ -102,7 +102,7 @@ exports.modify = (req, res, next) => {
         const textSend = (req.body.post) ? req.body.post.text : " ";
         const post = {
             text: textSend,
-            date: new Date().toLocaleString("af-ZA", { timeZone: "Europe/Paris" })
+            //date: new Date().toLocaleString("af-ZA", { timeZone: "Europe/Paris" })
         };
         // Here we Update the DataBase
         let sql2 = `UPDATE post

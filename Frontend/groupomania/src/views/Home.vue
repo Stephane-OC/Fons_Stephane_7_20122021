@@ -6,7 +6,12 @@
   </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.home {
+  background-color: rgba(100, 148, 237, 0.226);
+}
+
+</style>
 
 <script>
 // @ is an alias to /src

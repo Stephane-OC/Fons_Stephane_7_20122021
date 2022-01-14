@@ -72,7 +72,7 @@ exports.login = (req, res, next) => {
                     ),
                 })
             })
-            .catch(error => res.status(500).json({ message: "Erreur d'Authentification" }));
+            
     })
 };
 
@@ -127,7 +127,15 @@ exports.modifyAccount = (req, res, next) => {
         pool.execute(sql2, [req.body.prenom, req.params.id], function (err, result) {
             if (err) throw err;
         });
-    }    
+    }
+    res.status(200).json({ message: "Information user update" });
+}
+
+
+////////////////////////////  User account Profile Picture modification  ////////////////////////////
+
+
+exports.modifyPP = (req, res, next) => {
     if (req.file) {
         let sql = `SELECT * FROM user WHERE id = ?`;
         pool.execute(sql, [req.params.id], function (err, result) {
@@ -142,7 +150,7 @@ exports.modifyAccount = (req, res, next) => {
                         else console.log('Image modifiée !');
                     })
                 }
-                // get back all the informations from the Frontend 
+                // get back all the informations from the Frontend
                 let image = (req.file) ? `${req.protocol}://${req.get('host')}/images/profile/${req.file.filename}` : "";
                 // DB Update 
                 let sql2 = `UPDATE user
@@ -150,15 +158,14 @@ exports.modifyAccount = (req, res, next) => {
                 WHERE id = ?`;
                 pool.execute(sql2, [image, req.params.id], function (err, result) {
                     if (err) throw err;
-                    res.status(201).json({ message: `Picture user udpate` });
+                    res.status(201).json({ message: `Photo user udpate` });
                 });
             }
         });
-
-    }        
-    
-    res.status(200).json({ message: "User update informations" });
+    }
 };
+
+
 
 
 //////////////////////////// User Password modification ////////////////////////////

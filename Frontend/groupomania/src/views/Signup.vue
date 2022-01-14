@@ -453,7 +453,7 @@ export default {
       this.password = document.querySelector("#password").value;
       this.email = document.querySelector("#email").value;
       if (this.validation()) {
-        const self = this;
+        const that = this;
         axios
           .post("http://localhost:3000/api/user/signup", {
             nom: this.nom,
@@ -465,18 +465,18 @@ export default {
             console.log(response);
             //Redirection vers LOGIN
            
-            self.mode = "login";
+            that.mode = "login";
           })
           .catch(function (error) {
             console.log(error);
-            self.sameEmail = true;
+            that.sameEmail = true;
           });
       }
     },
     login() {
       this.password = document.querySelector("#passwordCheck").value;
       this.email = document.querySelector("#emailCheck").value;
-      const self = this;
+      const that = this;
       axios
         .post("http://localhost:3000/api/user/login", {
           email: this.email,
@@ -488,18 +488,18 @@ export default {
 
           const userId = CryptoJS.AES.encrypt(
             num.toString(),
-            self.$store.state.CryptoKey
+            that.$store.state.CryptoKey
             
           ).toString();
           console.log(userId);
           document.cookie = `user-token=${token}; SameSite=Lax; Secure; max-age=86400;`;
           document.cookie = `userId=${userId}; SameSite=Lax; Secure; max-age=86400;`;
-          self.$router.push("/home");
-          self.$router.go();
+          that.$router.push("/home");
+          that.$router.go();
         })
         .catch(function (error) {
           if (error) {
-            self.incorrect = true;
+            that.incorrect = true;
           }
         });
     },

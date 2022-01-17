@@ -11,7 +11,7 @@ const fs = require("fs");
 **  getOne & getAs to get back all the user's informations correctly        **
 **  modifAccount, to make user able to modify his account informations      **
 **  modifyPassword to make user able to modify his password on a secure way **
-**  delete function to make user able to delete his account                  */
+**  delete function to make user able to delete his account                 */
 
 ////////////////////////////  Signup Function  ////////////////////////////
 
@@ -210,6 +210,7 @@ exports.delete = (req, res, next) => {
         let sql = `SELECT * FROM user WHERE id=?`;
         pool.execute(sql, [req.params.id], function (err, result) {
             let user = result[0];
+            console.log(user)
             bcrypt.compare(req.body.password, user.password)
                 .then(valid => {
                     if (!valid) {
@@ -218,13 +219,13 @@ exports.delete = (req, res, next) => {
                         bcrypt.hash(req.body.password, 10)
                             .then(hash => {
                                 let sql = `DELETE FROM user WHERE id=?`;
-                                pool.execute(sql, [hash, req.params.id], function (err, result) {
+                                pool.execute(sql, [user.id], function (err, result) {
                                     if (err) throw err;
                                     console.log(result);
                                     res.status(200).json({ message: `Compte numéro ${req.params.id} supprimé` });
                                 });
                             })
-                            .catch(error => res.status(500).json({ error }));
+                            .catch(error => res.status(500).json({ error: "Suppression impossible" }));
                     }
                 })
                 .catch(error => res.status(400).json({ message: "Erreur d'Authentification" }));

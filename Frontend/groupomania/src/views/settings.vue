@@ -230,6 +230,7 @@ export default {
         this.update = false;
       }
     },
+    
     modifier() {
       this.nom = document.querySelector("#nom")
         ? document.querySelector("#nom").value

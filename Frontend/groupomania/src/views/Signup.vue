@@ -106,7 +106,7 @@
           <p>Email ou mot de passe incorrect</p>
         </div>
         <div id="formFooter">
-          <p class="lineHover, colorfull" href="#">Bienvenue dans la Groupomia Family !</p>
+          <p class="lineHover, colorfull" href="#">Groupomia, restons connecté !</p>
         </div>
       </div>
     </div>
@@ -171,7 +171,7 @@ h2 {
 		background-position: 200% center;
 	}
 }
-/* STRUCTURE */
+/* Structure */
 .wrapper {
   display: flex;
   align-items: center;
@@ -204,7 +204,7 @@ h2 {
   -webkit-border-radius: 0 0 10px 10px;
   border-radius: 0 0 10px 10px;
 }
-/* TABS */
+/* Tabs */
 h2.inactive {
   color: #cccccc;
 }
@@ -212,7 +212,7 @@ h2.active {
   color: #0d0d0d;
   border-bottom: 2px solid #5fbae9;
 }
-/* FORM TYPOGRAPHY*/
+/* Form Typography */
 input[type="button"],
 input[type="submit"],
 input[type="reset"] {
@@ -323,7 +323,7 @@ input[type="text"]:placeholder {
     transform: translateX(0px);
   }
 }
-/* Simple CSS3 Fade-in Animation */
+/* CSS3 Fade-in Animation KeyFrames */
 @-webkit-keyframes fadeIn {
   from {
     opacity: 0;
@@ -368,7 +368,7 @@ input[type="text"]:placeholder {
   -moz-animation-delay: 0.4s;
   animation-delay: 0.4s;
 }
-/* Simple CSS3 Fade-in Animation */
+/* CSS3 Fade-in Animation */
 .lineHover:after {
   display: block;
   left: 0;
@@ -414,9 +414,11 @@ export default {
     switchToSignup() {
       this.mode = "signup";
     },
+
     switchToLogin() {
       this.mode = "login";
     },
+
     validation() {
       let validEmail = new RegExp(
         /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@(([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -447,6 +449,7 @@ export default {
         validPassword.test(this.password)
       );
     },
+
     signup() {
       this.nom = document.querySelector("#nom").value;
       this.prenom = document.querySelector("#prenom").value;
@@ -463,7 +466,7 @@ export default {
           })
           .then(function (response) {
             console.log(response);
-            //Redirection vers LOGIN
+            //LOGIN Redirection
            
             that.mode = "login";
           })
@@ -473,6 +476,7 @@ export default {
           });
       }
     },
+
     login() {
       this.password = document.querySelector("#passwordCheck").value;
       this.email = document.querySelector("#emailCheck").value;
@@ -504,6 +508,7 @@ export default {
         });
     },
   },
+
   mounted() {
     if (document.cookie) {
       const userIdCookie = document.cookie

@@ -125,6 +125,9 @@
     transform: scale(1.1);
   }
 }
+.container{
+  background-color: rgba(100, 148, 237, 0.226);
+}
 .inputsearch {
   background-color: #f0f2f5;
   border-radius: 20px;

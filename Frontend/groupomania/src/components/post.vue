@@ -144,11 +144,11 @@
                   d="M34.6 6.1c5.7 0 10.4 5.2 10.4 11.5 0 6.8-5.9 11-11.5 16S25 41.3 24 41.9c-1.1-.7-4.7-4-9.5-8.3-5.7-5-11.5-9.2-11.5-16C3 11.3 7.7 6.1 13.4 6.1c4.2 0 6.5 2 8.1 4.3 1.9 2.6 2.2 3.9 2.5 3.9.3 0 .6-1.3 2.5-3.9 1.6-2.3 3.9-4.3 8.1-4.3m0-3c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5.6 0 1.1-.2 1.6-.5 1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"
                 ></path>
               </svg>
-              <span class="nbr">{{ post.like }}</span>
+              <span class="commentPage">{{ post.like }}</span>
             </div>
             <div class="comment">
               <svg
-                @click="commentDisplay"
+                @click="displayComment"
                 aria-label="Commenter"
                 class="_8-yf5 svg-react"
                 color="#262626"
@@ -164,7 +164,7 @@
                   fill-rule="evenodd"
                 ></path>
               </svg>
-              <span class="nbr">{{ post.comment }}</span>
+              <span class="commentPage">{{ post.comment }}</span>
             </div>
           </div>
           <div class="block-com disp">
@@ -185,11 +185,11 @@
                   />
                 </router-link>
               </div>
-              <div v-if="post.postId === comment.postId" class="Structur">
+              <div v-if="post.postId === comment.postId" class="commentStructur">
                 <span class="commentByAuthor"
                   >{{ comment.prenom }} {{ comment.nom }}</span
                 >
-                <p class="textComment">{{ comment.comment }}</p>
+                <p class="commentText">{{ comment.comments }}</p>
                 <img
                   class="delete"
                   src="../../image/times.svg"
@@ -261,6 +261,18 @@
   margin: 0px;
   padding: 0px;
 }
+.posts:hover {
+  .deletePost {
+    display: inline;
+  }
+}
+.deletePost {
+  height: 20px;
+  position: absolute;
+  right: 20px;
+  display: none;
+  cursor: pointer;
+}
 .svg-react {
   &:hover {
     fill: #aaaaaa;
@@ -278,16 +290,9 @@
   margin: auto;
   cursor: pointer;
 }
-.comment {
-  cursor: pointer;
-  margin-left: auto;
-  margin-right: auto;
-  &__img {
-    height: 40px;
-  }
-}
+
 .heart {
-  animation: heart 0.3s cubic-bezier(0.06, 1.16, 0.83, 0.67);
+  animation: heart 0.3s cubic-bezier(0.08, 1.18, 0.86, 0.68);
 }
 @keyframes heart {
   0% {
@@ -298,10 +303,10 @@
   }
 }
 .ppPost {
+  margin-right: 10px;
+  border-radius: 100%;  
   height: 45px;
   width: 45px;
-  margin-right: 10px;
-  border-radius: 100%;
   object-fit: cover;
 }
 .publier {
@@ -319,24 +324,6 @@
   background-color: #f0f2f5;
   color: #091f43;
 }
-.nbr {
-  font-weight: 300;
-  font-size: 20px;
-  margin-left: 10px;
-  margin-right: 10px;
-}
-.posts:hover {
-  .deletePost {
-    display: inline;
-  }
-}
-.deletePost {
-  height: 20px;
-  position: absolute;
-  right: 20px;
-  display: none;
-  cursor: pointer;
-}
 .delete {
   height: 15px;
   position: absolute;
@@ -345,21 +332,6 @@
   display: none;
   cursor: pointer;
   margin-left: 20px;
-}
-.textComment {
-  margin-left: 10px;
-  margin-right: 10px;
-  color: #091f43;
-}
-.commentByAuthor {
-  font-weight: bold;
-  margin-left: 10px;
-  margin-right: 10px;
-  padding-top: 10px;
-  color: #091f43;
-}
-.comment {
-  margin: auto;
 }
 .nomUser {
   font-family: "Quicksand";
@@ -379,9 +351,6 @@
   width: 40px;
   margin-left: 20px;
 }
-.comments {
-  display: flex;
-}
 .disp {
   display: none;
 }
@@ -398,25 +367,61 @@
   width: 100%;
   height: auto;
 }
+.commentText {
+  margin-left: 10px;
+  margin-right: 10px;
+  color: #091f43;
+  color: black;
+  font-weight: 600;
+  font-family: "Dosis";
+}
+.commentByAuthor {
+  font-weight: bold;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding-top: 10px;
+  color: #091f43;
+}
+.comment {
+  margin: auto;
+}
 #comment {
   border-radius: 20px;
   background-color: #f0f2f5;
 }
 .commentStructur {
   display: inline-block;
-  margin-bottom: 10px;
-  background-color: #f0f2f5;
-  border-radius: 20px;
-  position: relative;
   padding-left: 10px;
   padding-right: 20px;
   padding-top: 10px;
+  margin-bottom: 10px;
+  background-color: #4b99ff28;
+  border-radius: 20px;
+  position: relative;
   &:hover {
     .delete {
       display: block;
     }
   }
 }
+.comment {
+  margin-left: auto;
+  margin-right: auto;
+  cursor: pointer;
+  &__img {
+    height: 40px;
+  }
+}
+.commentPage {
+  margin-left: 10px;
+  margin-right: 10px;  
+  font-weight: 300;
+  font-size: 20px;
+}
+.comments {
+  display: flex;
+}
+
 @media (max-width: 560px) {
   .posts {
     width: 92%;
@@ -466,9 +471,14 @@ export default {
       return day + "/" + month + "/" + year;
     },
 
+    upload(event) {
+      this.newComment = event.target.value;
+    },    
+
     upload2(event) {
       this.image = event.target.files[0];
     },
+
     addPost() {
       this.token = document.cookie
         .split("; ")
@@ -502,6 +512,76 @@ export default {
           });
       }
     },
+
+    comment(event, id) {
+      if (this.newComment) {
+        const that = this;
+        axios
+          .post(
+            "http://localhost:3000/api/comment",
+          
+            {
+              comment: this.newComment,
+              authorId: this.userId,
+              postId: id,
+            },
+            {
+              headers: { Authorization: `Bearer ${this.token}` },
+            }
+          )
+          .then(function (response) {
+            console.log(response);
+            let pathClass, pathInput;
+            if (event.path[2].children[3].matches(".react")) {
+              pathClass = event.path[2].children[4];
+              pathInput = event.path[2].children[5].children[0];
+            } else {
+              pathClass = event.path[2].children[3];
+              pathInput = event.path[2].children[4].children[0];
+            }
+            pathClass.classList.remove("disp");
+            pathInput.value = null;
+            that.getPost();
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
+    },
+    
+
+    displayComment(event) {
+      let path;
+      if (event.path[3].children[3].matches(".react")) {
+        path = event.path[3].children[4];
+      } else {
+        path = event.path[3].children[3];
+      }
+      if (path.matches(".disp")) {
+        path.classList.remove("disp");
+      } else {
+        path.classList.add("disp");
+      }
+    },
+
+    deleteComment(id, authorId, currentPostId) {
+      const self = this;
+      if (this.userId == authorId || (self.user && self.user.admin)) {
+        axios
+          .delete(`http://localhost:3000/api/comment/${id}/${currentPostId}`, {
+            headers: { Authorization: `Bearer ${this.token}` },
+            data: { userId: self.userId, admin: self.user.admin },
+          })
+          .then((response) => {
+            console.log(response);
+            self.getPost();
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
+    },    
+
     liked() {
       const that = this;
       axios
@@ -519,6 +599,7 @@ export default {
           console.log(error);
         });
     },
+
     deletePost(postId, authorId) {
       const that = this;
       if (this.userId == authorId || (that.user && that.user.admin)) {
@@ -536,6 +617,7 @@ export default {
           });
       }
     },
+
     like(currentPostId) {
       const that = this;
       axios
@@ -560,6 +642,7 @@ export default {
           .find((row) => row.startsWith("user-token="))
           .split("=")[1];
       }
+
       const that = this;
       axios
         .get("http://localhost:3000/api/post", {
@@ -578,9 +661,18 @@ export default {
           }
         });
       axios
-
+        .get("http://localhost:3000/api/comment", {
+          headers: { Authorization: `Bearer ${this.token}` },
+        })
+        .then((response) => (this.comments = response.data) (console.log(this.comments)))
+        .catch(function (error) {
+          if (error.response && error.response.status === 401) {
+            that.$router.push("/");
+          }
+        });
     },
   },
+
   mounted() {
     (this.userId = document.cookie
       ? CryptoJS.AES.decrypt(

@@ -2,7 +2,7 @@
   <div class="container">
     <div class="delete" v-if="deleteAccount">
       <div class="wrapper fadeInDown">
-        <div id="formContent">
+        <div id="formContent" class="formShadowRed">
           <h2 class="suppr" v-if="!modePassword">SUPPRIMER LE PROFIL</h2>
           <!-- Modif Form -->
           <form v-on:submit.prevent="accountDelete()">
@@ -25,7 +25,7 @@
     </div>
     <div class="modifyBox" v-if="!deleteAccount">
       <div class="wrapper fadeInDown">
-        <div id="formContent">
+        <div id="formContent" class="formShadowBlue">
           <h2
             class="modif colorfull underlineHoverH2"
             v-if="modePassword"
@@ -404,9 +404,15 @@ h2 {
   max-width: 450px;
   position: relative;
   padding: 0px;
+  text-align: center;
+}
+.formShadowBleu {
   -webkit-box-shadow: 0 30px 60px 0 rgb(74, 174, 255);
   box-shadow: 0 30px 60px 0 rgb(74, 174, 255);
-  text-align: center;
+}
+.formShadowRed {
+  -webkit-box-shadow: 0 30px 60px 0 rgb(74, 174, 255);
+  box-shadow: 0 30px 60px 0 rgba(134, 18, 18, 0.767);
 }
 #formFooter {
   background-color: #f6f6f6;

@@ -1,5 +1,5 @@
 <template>
-   <div class="signup">
+   <div class="signup contein">
     <div class="wrapper fadeInUp">
       <div id="formContent">
         <!-- Tabs Titles -->
@@ -121,14 +121,19 @@
   padding: 0px;
   margin: 0px;
   font-weight: 500;
-
+}
+.contein {
+  background-color: #091f43;
+  width: 100%;
+  height: 100%;
+  min-height: calc(100vh - 55px);
 }
 .error {
   color: red;
   margin-top: -30px;
 }
 .signup {
-  margin-top: 100px;
+  margin-top: 0px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -190,8 +195,8 @@ h2 {
   max-width: 450px;
   position: relative;
   padding: 0px;
-  -webkit-box-shadow: 0 30px 60px 0 #ABC8E2;
-  box-shadow: 0 30px 60px 0 #ABC8E2;
+  -webkit-box-shadow: 0 30px 60px 0 #d1515a;
+  box-shadow: 0 30px 300px 0 #d1515a;
   text-align: center;
     font-family: "dosis";
   font-weight: 900;

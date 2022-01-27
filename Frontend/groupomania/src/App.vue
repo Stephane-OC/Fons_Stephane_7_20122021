@@ -86,7 +86,7 @@
             <img
               @click="dispResearch"
               class="cross"
-              src="../image/times.svg"
+              src="../image/delete-cross.svg"
               alt=""
             />
           </div>
@@ -124,9 +124,6 @@
     transition: 0.3s;
     transform: scale(1.1);
   }
-}
-.container{
-  background-color: rgba(100, 148, 237, 0.226);
 }
 .inputsearch {
   background-color: #f0f2f5;

@@ -1,5 +1,6 @@
 <template>
   <router-view>
+    <div class="contein">
     <div class="d-flex justify-content-center newPost">
       <div
         class="
@@ -13,6 +14,7 @@
           bg-white
           border
           mt-5
+          
         "
       >
         <div class="form">
@@ -91,13 +93,36 @@
                     >Posté le {{ formatDate(post.date) }}</span
                   >
                 </div>
-                <img
-                  class="deletePost"
-                  src="../../image/times.svg"
-                  alt="supprimer"
-                  v-if="post.authorId == userId || (user && user.admin)"
-                  @click="deletePost(post.postId, post.authorId)"
-                />
+
+                <!-- Modal post Delete -->
+                <div 
+                  class="btn-group deletePost btn-group-sm" 
+                  role="group" 
+                  aria-label="Button to delete in a nested dropdown" 
+                  v-if="post.authorId == userId || (user && user.admin)"> 
+                  <div 
+                    class="btn-group deletePost btn-group-sm" 
+                    role="group">
+                    <button 
+                      id="btnGroupDrop1" 
+                      type="button" 
+                      class="btn btnModal btn-primary dropdown-toggle" 
+                      data-bs-toggle="dropdown" 
+                      aria-expanded="false">
+                      ✜</button>
+                          <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                            <li><a 
+                                class="dropdown-item" 
+                                alt="supprimer"
+                                v-if="post.authorId == userId || (user && user.admin)"
+                                @click="deletePost(post.postId, post.authorId)"
+                                href="#">Supprimer
+                              </a>
+                            </li>  
+                          </ul>
+                    </div>
+                </div>
+                
               </div>
             </div>
           </div>
@@ -190,19 +215,29 @@
                   >{{ comment.prenom }} {{ comment.nom }}</span
                 >
                 <p class="commentText">{{ comment.comments }}</p>
-                <img
-                  class="delete"
-                  src="../../image/times.svg"
-                  alt="supprimer"
-                  v-if="comment.id == userId || (user && user.admin)"
-                  @click="
-                    deleteComment(
-                      comment.idComment,
-                      comment.authorId,
-                      post.postId
-                    )
-                  "
-                />
+
+                <!-- Modal Comment Delete -->
+                <div class="dropdown delete">
+                  <button 
+                    class="btn btn-secondary dropdown-toggle" 
+                    type="button" 
+                    id="btnGroupEnd" 
+                    data-bs-toggle="dropdown" 
+                    aria-expanded="false">
+                  ✜</button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                    <li>
+                      <button 
+                        class="dropdown-item" 
+                        alt="supprimer" 
+                        type="button" 
+                        v-if="post.authorId == userId || (user && user.admin) "
+                        @click="deleteComment(comment.idComment, comment.authorId, post.postId)">
+                        Supprimer
+                      </button>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
@@ -223,6 +258,7 @@
     <div v-else class="noPost">
       <p class="text-noPost">Aucun post ici pour le moment ...</p>
     </div>
+    </div>
   </router-view>
 </template>
 
@@ -236,6 +272,29 @@
   font-style: italic;
   font-size: 20px;
   color: #091f43;
+}
+
+.contein {
+  background-color: #091f43;
+  margin: 0px;
+  width: 100%;
+  height: 100%;
+}
+#btnGroupDrop1 {
+  top:-0.4em;
+  padding: 0.25rem 0.2rem;
+  font-size: .875rem;
+  border-radius: 0.7rem;
+  background-color: #091f43;
+  border-color: #d1515a;
+}
+#btnGroupEnd {
+ 
+  padding: 0rem 0.3rem;
+  font-size: .875rem;
+  border-radius: 1rem;
+  background-color: #091f43;
+  border-color: #d1515a;
 }
 .noPost {
   width: 500px;
@@ -261,7 +320,7 @@
   margin: 0px;
   padding: 0px;
 }
-.posts:hover {
+.infopost:hover {
   .deletePost {
     display: inline;
   }
@@ -269,9 +328,12 @@
 .deletePost {
   height: 20px;
   position: absolute;
-  right: 20px;
+  right: 10px;
   display: none;
   cursor: pointer;
+}
+.dropend {
+  padding: 0px;
 }
 .svg-react {
   &:hover {
@@ -417,11 +479,12 @@
   margin-right: 10px;  
   font-weight: 300;
   font-size: 20px;
+  font-family: "Quicksand";
+  font-weight: 500;
 }
 .comments {
   display: flex;
 }
-
 @media (max-width: 560px) {
   .posts {
     width: 92%;
@@ -565,16 +628,16 @@ export default {
     },
 
     deleteComment(id, authorId, currentPostId) {
-      const self = this;
-      if (this.userId == authorId || (self.user && self.user.admin)) {
+      const that = this;
+      if (this.userId == authorId || (that.user && that.user.admin)) {
         axios
           .delete(`http://localhost:3000/api/comment/${id}/${currentPostId}`, {
             headers: { Authorization: `Bearer ${this.token}` },
-            data: { userId: self.userId, admin: self.user.admin },
+            data: { userId: that.userId, admin: that.user.admin },
           })
           .then((response) => {
             console.log(response);
-            self.getPost();
+            that.getPost();
           })
           .catch(function (error) {
             console.log(error);

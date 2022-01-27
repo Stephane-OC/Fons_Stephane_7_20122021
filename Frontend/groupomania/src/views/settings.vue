@@ -1,31 +1,26 @@
 <template>
+  <div class="contein">
   <div class="container">
     <div class="delete" v-if="deleteAccount">
       <div class="wrapper fadeInDown">
         <div id="formContent" class="formShadowRed">
-          <h2 class="suppr" v-if="!modePassword">SUPPRIMER LE PROFIL</h2>
+          <h2 class="suppr colorfullDelete" v-if="!modePassword">SUPPRIMER LE PROFIL ! Vous serez renvoyer sur la page de suppression !</h2>
           <!-- Modif Form -->
-          <form v-on:submit.prevent="accountDelete()">
-            <input
-              type="text"
-              id="password"
-              name="login"
-              placeholder="Mot de passe"
-              required
-            />
+
             <div class="alert alert-danger app" role="alert" v-if="errorMdp">
               Mot de passe incorrect !
             </div>
-            <button class="btn btn-danger mt-3 mb-5" @click="accountDelete()">
-              SUPPRIMER
+        
+            <button type="button" class="btn btn-primary btn-danger btnGroup" data-bs-toggle="modal" data-bs-target="#deleteAccount" >
+              Supprimer mon compte
             </button>
-          </form>
         </div>
       </div>
     </div>
+
     <div class="modifyBox" v-if="!deleteAccount">
       <div class="wrapper fadeInDown">
-        <div id="formContent" class="formShadowBlue">
+        <div id="formContent" class="formShadowBleu">
           <h2
             class="modif colorfull underlineHoverH2"
             v-if="modePassword"
@@ -107,12 +102,66 @@
           </form>
           <div id="formFooter">
             <p @click="switchToDelete()" class="underlineHover colorfullDelete" href="#">
-              SUPPRIMER LE COMPTE
+              SUPPRIMER LE COMPTE 
             </p>
           </div>
         </div>
       </div>
     </div>
+  </div>
+                <!-- Delete Modal -->
+    <div 
+      class="modal fade" 
+      id="deleteAccount" 
+      tabindex="-1" 
+      aria-labelledby="deleteAccount" 
+      aria-hidden="true">
+      <div class="modal-dialog formShadowRed modalStyle">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 
+              class="modal-title modalStyle" 
+              id="deleteAccount">Suppression de compte !</h5>
+            <button 
+              type="button" 
+              class="btnGroupBleue btn-close" 
+              data-bs-dismiss="modal" 
+              aria-label="Close">
+            </button>
+          </div>
+          <div class="modal-body">
+              Est tu sur de vouloir supprimer ton compte ? Cela effacera ton compte et tout son contenus. 
+              De plus tu ne pourras plus avoir accès à toutes les publications de tes co-worker !!
+          </div>
+          <form class="flexCenter" v-on:submit.prevent>
+            <input
+              type="password"
+              id="password"
+              name="login"
+              placeholder="Mot de passe"
+              required
+            />
+          </form>
+          <div class="modal-footer flexCenter">
+            <button 
+              type="button" 
+              class="btnGroupBleue btn btn-primary flexCenter" 
+              data-bs-dismiss="modal">Je garde mon compte
+            </button>
+            <button 
+              type="button" 
+              class="btn btn-danger btnGroupRed flexCenter" 
+              @click="accountDelete()">Supprimer mon Compte
+            </button>
+            <div 
+              class="alert alert-danger app" 
+              role="alert" v-if="errorMdp">
+              Mot de passe incorrect !
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>  
   </div>
 </template>
 
@@ -298,6 +347,17 @@ export default {
 .app {
   animation: disparition 3.5s forwards;
 }
+.contein {
+  background-color: #091f43;
+  margin: 0px;
+  width: 100%;
+  height: calc(100vh - 55px);
+}
+body, html {
+  max-width: 1440px;  
+  padding: 0;
+  margin: 0;
+}
 .red {
   color: red;
   margin: 0px;
@@ -316,7 +376,8 @@ export default {
   position: relative;
 }
 .container {
-  margin-top: 50px;
+  padding-top: 150px;
+  margin-bottom: auto;
 }
 .error {
   color: red;
@@ -346,6 +407,11 @@ h2 {
   margin: 40px 8px 10px 8px;
   color: #cccccc;
   color: #fff;
+}
+.flexCenter {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 @keyframes textclip {
 	to {
@@ -407,12 +473,18 @@ h2 {
   text-align: center;
 }
 .formShadowBleu {
-  -webkit-box-shadow: 0 30px 60px 0 rgb(74, 174, 255);
-  box-shadow: 0 30px 60px 0 rgb(74, 174, 255);
+  -webkit-box-shadow: 0 0px 274px 0 #d1515a;
+  box-shadow: 0 0px 274px 0 #d1515a;
 }
 .formShadowRed {
-  -webkit-box-shadow: 0 30px 60px 0 rgb(74, 174, 255);
-  box-shadow: 0 30px 60px 0 rgba(134, 18, 18, 0.767);
+  -webkit-box-shadow: 0 30px 60px 0 #d1515a;
+  box-shadow: 0 30px 60px 0 #d1515a;
+}
+.btnGroupRed {
+  color : #d1515b
+}
+.btnGroupBleue {
+  background-color: #122441;
 }
 #formFooter {
   background-color: #f6f6f6;
@@ -423,11 +495,10 @@ h2 {
   text-align: center;
   -webkit-border-radius: 0 0 10px 10px;
   border-radius: 0 0 10px 10px;
-  -webkit-box-shadow: 0 30px 60px 0 rgb(255, 74, 74);
-  box-shadow: 0 30px 60px 0 rgb(255, 74, 74);
+  -webkit-box-shadow: 0 30px 60px 0 #d1515a;
+  box-shadow: 0 30px 60px 0 #d1515a;
 }
 .btn{
-  background-color: #a51313;
   border: none;
   font-family: "Dosis";
   color: white;
@@ -461,7 +532,7 @@ h2.active {
 input[type="button"],
 input[type="submit"],
 input[type="reset"] {
-  background-color: #56baed;
+  background-color: #122441;
   border: none;
   color: white;
   padding: 15px 80px;
@@ -650,5 +721,11 @@ input[type="text"]:placeholder {
   color: rgb(197, 38, 38);
   font-family: "Dosis";
   font-weight: 900;
+}
+.modalStyle {
+  font-family: "Dosis";
+  font-weight: 900;
+  text-align: center;
+  color: black;
 }
 </style>

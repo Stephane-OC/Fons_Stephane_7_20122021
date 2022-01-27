@@ -1,5 +1,5 @@
 <template>
-  <div class="home background">
+  <div class="contein">
     <div class="container">
       <div v-if="currentUser" class="infoUser col-12">
         <div class="ownProfile" v-if="userId == currentUser.id">
@@ -72,13 +72,35 @@
                       >Posté le {{ formatDate(post.date) }}</span
                     >
                   </div>
-                  <img
-                    class="postDelete"
-                    src="../../image/times.svg"
-                    alt="supprimer"
-                    v-if="post.authorId == userId || (user && user.admin)"
-                    @click="postDelete(post.postId, post.authorId)"
-                  />
+                <!-- Modal post Delete -->
+                <div 
+                  class="btn-group deletePost btn-group-sm" 
+                  role="group" 
+                  aria-label="Button to delete in a nested dropdown" 
+                  v-if="post.authorId == userId || (user && user.admin)"> 
+                  <div 
+                    class="btn-group deletePost btn-group-sm" 
+                    role="group">
+                    <button 
+                      id="btnGroupDrop1" 
+                      type="button" 
+                      class="btn btnModal btn-primary dropdown-toggle" 
+                      data-bs-toggle="dropdown" 
+                      aria-expanded="false">
+                      ✜</button>
+                          <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                            <li><a 
+                                class="dropdown-item" 
+                                alt="supprimer"
+                                v-if="post.authorId == userId || (user && user.admin)"
+                                @click="deletePost(post.postId, post.authorId)"
+                                href="#">Supprimer
+                              </a>
+                            </li>  
+                          </ul>
+                    </div>
+                </div>
+
                 </div>
               </div>
             </div>
@@ -171,19 +193,29 @@
                     >{{ comment.prenom }} {{ comment.nom }}</span
                   >
                   <p class="commentText">{{ comment.comments }}</p>
-                  <img
-                    class="delete"
-                    src="../../image/times.svg"
-                    alt="supprimer"
-                    v-if="comment.id == userId || (user && user.admin)"
-                    @click="
-                      deleteComment(
-                        comment.idComment,
-                        comment.authorId,
-                        post.postId
-                      )
-                    "
-                  />
+
+                <!-- Modal Comment Delete -->
+                <div class="dropdown delete">
+                  <button 
+                    class="btn btn-secondary dropdown-toggle" 
+                    type="button" 
+                    id="btnGroupEnd" 
+                    data-bs-toggle="dropdown" 
+                    aria-expanded="false">
+                  ✜</button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                    <li>
+                      <button 
+                        class="dropdown-item" 
+                        alt="supprimer" 
+                        type="button" 
+                        v-if="post.authorId == userId || (user && user.admin) "
+                        @click="deleteComment(comment.idComment, comment.authorId, post.postId)">
+                        Supprimer
+                      </button>
+                    </li>
+                  </ul>
+                </div>
                 </div>
               </div>
             </div>
@@ -213,10 +245,34 @@
 
 <style lang="scss" scoped>
 @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@604;800&family=Quicksand:wght@500;550;700&display=swap');
-.background {
-  background-color: rgba(80, 170, 255, 0.267);
-}
 
+body, html {
+  max-width: 1440px;  
+  padding: 0;
+  margin: 0;
+}
+.contein {
+  background-color: #091f43;
+  width: 100%;
+  height: 100%;
+  min-height: calc(100vh - 55px);
+}
+#btnGroupDrop1 {
+  top:-0.4em;
+  padding: 0.25rem 0.2rem;
+  font-size: .875rem;
+  border-radius: 0.7rem;
+  background-color: #091f43;
+  border-color: #d1515a;
+}
+#btnGroupEnd {
+ 
+  padding: 0rem 0.3rem;
+  font-size: .875rem;
+  border-radius: 1rem;
+  background-color: #091f43;
+  border-color: #d1515a;
+}
 .noPosts {
   color: #091f43;
   margin-top: 200px;
@@ -228,7 +284,7 @@
   }
 }
 .metier {
-  color: #091f43;
+  color: #ffffff;
   font-style: italic;
   height: 100%;
   padding: 10px;
@@ -263,15 +319,21 @@
   }
 }
 .userName {
-  color: #091f43;
+  color: #ffffff;
   font-size: 35px;
   padding-top: 50px;
   padding-right: 50px;
 }
 .infoUser {
-  color: #091f43;
+  background-color: #acb5c42d;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+
+
   display: flex;
-  margin-top: 60px;
+  margin-top: 0px;
   margin-bottom: 30px;
   margin-left: auto;
   margin-right: auto;
@@ -286,6 +348,18 @@
 }
 .infopost {
   position: relative;
+}
+.deletePost {
+  height: 20px;
+  position: absolute;
+  right: 10px;
+  display: none;
+  cursor: pointer;
+}
+.infopost:hover {
+  .deletePost {
+    display: inline;
+  }
 }
 .text {
   color: #091f43;
@@ -499,7 +573,6 @@ export default {
         : null,
     };
   },
-
   methods: {
     formatDate(input) {
       console.log(input);
@@ -509,6 +582,7 @@ export default {
         day = datePart[2];
       return day + "/" + month + "/" + year;
     },
+
     profilePicModif(event) {
       this.image = event.target.files[0];
       console.log(this.image);

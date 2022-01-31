@@ -111,7 +111,8 @@
       </nav>
     </div>
   </header>
-  <router-view :key="$route.fullPath" />
+  <!-- eslint-disable -->
+  <router-view :key="$route.Path"/>
 </template>
 
 <style lang="scss">

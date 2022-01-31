@@ -217,7 +217,9 @@
                 <p class="commentText">{{ comment.comments }}</p>
 
                 <!-- Modal Comment Delete -->
-                <div class="dropdown delete">
+                <div 
+                v-if="comment.authorId == userId || (user && user.admin) "
+                class="dropdown delete">
                   <button 
                     class="btn btn-secondary dropdown-toggle" 
                     type="button" 
@@ -231,7 +233,7 @@
                         class="dropdown-item" 
                         alt="supprimer" 
                         type="button" 
-                        v-if="post.authorId == userId || (user && user.admin) "
+                        v-if="comment.authorId == userId || (user && user.admin) "
                         @click="deleteComment(comment.idComment, comment.authorId, post.postId)">
                         Supprimer
                       </button>

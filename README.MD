@@ -4,6 +4,7 @@
 
 ## ■ Technologies utilisées :
 ```
+
     ▲ NodeJs - VueJs - SQL - SCSS - Bootstrap
 
 ```
@@ -12,15 +13,20 @@
 
 ### Pour pouvoir faire fonctionner votre réseau social il vous faudra :
 
-    ▲ MySql : https://dev.mysql.com/downloads/installer/
-    ▲ Node.js : https://nodejs.org/en/
-    ▲ Git : https://git-scm.com/downloads
+```
+
+    ▲ [MySql](https://dev.mysql.com/downloads/installer/)
+    ▲ [Node.js](https://nodejs.org/en/)
+    ▲ [Git](https://git-scm.com/downloads)
+
+```    
 
 
 Il vous faut créer un dossier vide et cloner à l'intérieur :
 
 ```
-https://github.com/Stephane-OC/Fons_Stephane_7_20122021.git
+
+git clone https://github.com/Stephane-OC/Fons_Stephane_7_20122021.git
 
 ```
 
@@ -49,6 +55,7 @@ Vous n'aurez ensuite plus qu'a importer le fichier groupomania.sql
 
 Ouvrez votre terminal dans votre dossier Frontend puis :
 ```
+
 npm install
 npm run serve
 
@@ -60,6 +67,7 @@ le navigateur devra être ouvert à l'adresse : http://localhost:8080/
 Ouvrez votre terminal dans votre dossier Frontend puis :
 
 ```
+
 npm install
 npm node server
 

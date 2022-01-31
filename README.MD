@@ -11,11 +11,12 @@
 
 ## ■ Installation de GROUPOMANIA
 
+
 ### Pour pouvoir faire fonctionner votre réseau social il vous faudra :
 
-    ▲ MySql : https://dev.mysql.com/downloads/installer/
-    ▲ Node.js : https://nodejs.org/en/
-    ▲ Git : https://git-scm.com/downloads
+   ▲ MySql : https://dev.mysql.com/downloads/installer/
+   ▲ Node.js : https://nodejs.org/en/
+   ▲ Git : https://git-scm.com/downloads
 
 
 Il vous faut créer un dossier vide et cloner à l'intérieur :

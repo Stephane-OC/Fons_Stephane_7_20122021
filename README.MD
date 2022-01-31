@@ -41,7 +41,7 @@ Ouvrir MySql Line client (ou Workbench) pour pouvoir effectuer ces lignes de com
 ```
 
 CREATE DATABASE groupomania;
-USE groupomania
+USE groupomania;
 
 ```
 Vous n'aurez ensuite plus qu'a importer le fichier groupomania.sql
